@@ -1,0 +1,74 @@
+\documentclass{article}
+
+\usepackage[paperheight=33cm, paperwidth=33cm]{geometry}
+\usepackage{tikz}
+
+\usetikzlibrary{arrows, automata, positioning}
+\tikzset{every picture/.style={->, >=stealth', shorten >=1pt, auto, node distance=5cm, thick}}
+\tikzset{every state/.append style={minimum size=1.5cm}}
+\tikzset{every path/.append style={pos=0.15, sloped, above}}
+
+\begin{document}
+\begin{tikzpicture}[remember picture, overlay]
+\node[state, accepting] (qf1) at (current page.center) {qf1};
+\node[state, initial below] (q0) [below right=10cm of qf1] {q0};
+\node[state, accepting] (qf) [above left=10cm of qf1] {qf};
+\node[state] (qcon1) [above=10cm of qf1] {qcon1};
+\node[state] (qs) [right=10cm of qf1] {qs};
+\node[state] (qt) [above right=10cm of qf1] {qt};
+\node[state] (qc) [below left=4.5cm of qf1] {qc};
+\node[state] (qcon) [below left=10cm of qf1] {qcon};
+
+\draw (qf1.100) -- node {b g h k m p r} (qcon1.-100);
+\draw (qcon1.-80) -- node {a e i o u} (qf1.80);
+
+\draw (qf1.145) -- node[below] {n} (qf.-55);
+\draw (qf.-35) -- node {a e i o u} (qf1.125);
+
+\draw (qf1.55) -- node {t} (qt.-145);
+\draw (qt.-125) -- node[below] {a e i o u} (qf1.35);
+
+\draw (qf1.10) -- node {s} (qs.170);
+\draw (qs.-170) -- node[below] {a e i o u} (qf1.-10);
+
+\draw (qcon1) -- node[pos=0.1] {y} (qcon.90);
+\draw (qs) -- node[pos=0.1, below] {h} (qcon.0);
+
+\path
+(qf1) edge node {c} (qc)
+(qc) edge node {h} (qcon)
+
+(qf1) edge[bend right=25] node {d j w y z} (qcon)
+(qcon) edge[bend right=25] node {a e i o u} (qf1)
+
+%(qf1) edge[bend right=10] node {n} (qf)
+%(qf) edge[bend right=10] node {a e i o u} (qf1)
+
+%(qf1) edge[bend right=10] node {t} (qt)
+%(qt) edge[bend right=10] node {a e i o u} (qf1)
+
+%(qf1) edge[bend right=10] node {s} (qs)
+%(qs) edge[bend right=10] node {a e i o u} (qf1)
+
+%(qf1) edge[bend right=10] node[pos=0.2] {b g h k m p r} (qcon1)
+%(qcon1) edge[bend right=10] node {a e i o u} (qf1)
+
+(qf1) edge[loop below, looseness=10, out=-60, in=-90] node[below=0.7cm, sloped=false] {a e i o u} (qf1)
+
+(qf) edge node[pos=0.2] {b g h k m n p r} (qcon1)
+(qf) edge node[pos=0.1] {s} (qs)
+(qf) edge node[pos=0.1] {t} (qt)
+
+(qf) edge node {c} (qc)
+(qf) edge[bend right=15] node {d j w y z} (qcon)
+
+(q0) edge node {c} (qc)
+(q0) edge[bend left=15] node {d j w y z} (qcon)
+(q0) edge node {a e i o u} (qf1)
+(q0) edge node[pos=0.1] {b g h k m n p r} (qcon1)
+(q0) edge node {s} (qs)
+(q0) edge node[rotate=180] {t} (qt)
+
+(qt) edge[bend right=90, looseness=2] node[pos=0.02] {s} (qcon);
+\end{tikzpicture}
+\end{document}
